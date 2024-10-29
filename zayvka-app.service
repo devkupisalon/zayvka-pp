@@ -1,0 +1,14 @@
+[Unit]
+Description=Run app.js on server startup
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /root/zayvka-app/app.js
+WorkingDirectory=/root/zayvka-app
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=zayvka-app
+
+[Install]
+WantedBy=multi-user.target
