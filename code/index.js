@@ -19,7 +19,8 @@ const colors = {
     bg_two: '#27262c',
     text: '#27262c',
     button_bg: '#7886cb',
-    button_text: '#e7e7e7'
+    button_text: '#e7e7e7',
+    body_bg: '#18231d'
 };
 
 const setCheckmark = s => {
@@ -222,6 +223,7 @@ async function change() {
     });
 
     document.querySelector(one[3]).style.border = `2px solid ${colors.button_bg}`;
+    document.querySelector('body').style.backgroundColor = colors.body_bg;
 }
 
 fill_tg.addEventListener('click', async () => {
