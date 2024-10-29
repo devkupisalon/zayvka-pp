@@ -57,9 +57,9 @@ app.get('/savedata', async (req, res) => {
     }
 });
 
-app.listen('8002', (err) => {
+app.listen('8000', (err) => {
     if (err) {
         logger.error(err.message);
     }
-    logger.info('Server is running on port 8002');
+    logger.info('Server is running on port 8000');
 });
