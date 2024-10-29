@@ -183,7 +183,7 @@ async function change() {
     const one = [
         'input',
         '.select',
-        'body',
+        '.container',
         '.field_multiselect',
         '.field_select',
         '.field_select option'
