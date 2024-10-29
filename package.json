@@ -1,0 +1,24 @@
+{
+  "name": "zayvka-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hungrydev",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "fs": "^0.0.1-security",
+    "googleapis": "^144.0.0",
+    "node-telegram-bot": "^0.1.9",
+    "path": "^0.12.7",
+    "pino": "^9.5.0",
+    "pino-pretty": "^11.3.0",
+    "url": "^0.11.4"
+  }
+}

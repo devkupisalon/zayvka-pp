@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>zayvka na propusk</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="/styles/app.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <form id="partner-form">
+            <h3 id="main-heading">Заполните пожалуйста данные для формирования заявки на пропуск</h3>
+            <div class="input-form">
+                <div class="input-label" id="manager-name-label">ФИО</div>
+                <input class="input" type="text" id="manager-name" placeholder="ФИО" required
+                    oninput="validateName(event.target)">
+                <div class="input-label" id="manager-phone-label">Телефон</div>
+                <input class="input" type="tel" id="manager-phone" placeholder="79999999999" required
+                    oninput="formatPhoneNumber(this)">
+                <div class="input-label" id="car-number-label">Госномер</div>
+                <input class="input" type="text" id="car-number" placeholder="А777АA777 или Без номеров"
+                    pattern="[А-Я]\d{3}[А-Я]{2}\d{2,3}|Без номеров" required>
+
+                <p id="fill-text">Вы можете заполнить ФИО и номер телефона из телеграма (проверьте заполнены ли у вас
+                    имя и фамилия в тг)</p>
+                <button class="fill-tg" id="autofill-tg">Поделиться контактом</button>
+
+                <div class="input-label" id="date-label">Дата</div>
+                <select class="input-date" id="date" required></select>
+                <div class="input-label" id="time-label">Время</div>
+                <select class="input-time" id="time" required></select>
+
+                <label for="car-brands" class="input-label">Марка</label>
+                <select id="car-brands-select" class="select" onchange="getCarModels()" required>
+                    <!-- опции будут добавлены динамически -->
+                </select>
+
+                <label for="car-models" class="input-label">Модель</label>
+                <select id="car-models-select" class="select" disabled required>
+                    <!-- опции моделей будут добавлены динамически -->
+                </select>
+
+            </div>
+
+            <div class="multiselect_block">
+
+                <label for="select-1" class="field_multiselect">Выберите цель посещения</label>
+                <input id="checkbox-1" class="multiselect_checkbox" type="checkbox">
+                <label for="checkbox-1" class="multiselect_label"></label>
+                <select id="field_select-type" class="field_select" multiple>
+                    <!-- заполняем из файла -->
+                </select>
+            </div>
+
+            <button class="send" id="send_no_tg">Отправить данные</button>
+
+        </form>
+    </div>
+
+    <div class="success-checkmark">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+    </div>
+
+    <div class="bottom-sheet-wrapper">
+        <div class="backdrop"></div>
+        <div class="bottom-sheet">
+            <p id="bottom-text"></p>
+        </div>
+    </div>
+
+    <div class='c-car-spinner'>
+        <svg viewBox='0 0 80 80' class='c-car-spinner__svg '>
+            <circle cx='40' cy='40' r='30' class='c-car-spinner__svg-circle' />
+        </svg>
+        <svg width="51px" class="c-car-spinner__svg-car" height="39px" viewBox="0 0 51 39" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                stroke-linejoin="round">
+                <g id="car-picture-icon" transform="translate(-16.000000, -19.000000)" stroke-width="3">
+                    <g id="Group"
+                        transform="translate(41.500000, 38.500000) rotate(-360.000000) translate(-41.500000, -38.500000) translate(18.000000, 21.000000)">
+                        <polygon id="Stroke-4097"
+                            points="3.21917808 35 12.2328767 35 12.2328767 29.2727273 3.21917808 29.2727273">
+                        </polygon>
+                        <polygon id="Stroke-4098"
+                            points="35.4109589 35 44.4246575 35 44.4246575 29.2727273 35.4109589 29.2727273">
+                        </polygon>
+                        <polygon id="Stroke-4099"
+                            points="47 29.2727273 47 20.4909091 41.125 14.6363636 5.875 14.6363636 0 20.4909091 0 29.2727273">
+                        </polygon>
+                        <polygon id="Stroke-4100"
+                            points="35.303653 0 11.696347 0 5.79452055 14.6363636 41.2054795 14.6363636"></polygon>
+                        <path d="M0,23.5454545 L13.5205479,23.5454545" id="Stroke-4101"></path>
+                        <path d="M33.4794521,23.5454545 L47,23.5454545" id="Stroke-4102"></path>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+    </div>
+
+    <script src="/scripts/index.js"></script>
+</body>
+
+</html>
