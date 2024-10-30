@@ -51,7 +51,7 @@ input:valid {
 .input-label {
     text-align: center;
     /* width: calc(23% - 10px); */
-    width: 30%;
+    width: calc(30% -10px);
     font-weight: bold;
     margin-right: 10px;
     margin-bottom: 20px;
@@ -68,7 +68,7 @@ input[type="tel"],
 .select {
     text-align: center;
     /* width: calc(55% - 10px); */
-    width: 70%;
+    width: calc(70% - 10px);
     color: var(--tg-theme-text-color);
     padding: 10px 20px;
     border-radius: 20px;
