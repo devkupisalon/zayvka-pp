@@ -75,6 +75,18 @@ input[type="tel"],
     box-sizing: border-box;
 }
 
+@media screen and (max-width: 355px) {
+
+    .input-label,
+    input[type="text"],
+    input[type="tel"],
+    .input-time,
+    .input-date,
+    .select {
+        width: 100%;
+    }
+}
+
 .input::placeholder {
     text-align: center;
 }
