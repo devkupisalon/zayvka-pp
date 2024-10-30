@@ -104,7 +104,6 @@ input[type="tel"],
 .c-car-spinner {
     height: 120px;
     width: 120px;
-    /* position: relative; */
     margin: 0 auto;
     display: block;
     position: fixed;
