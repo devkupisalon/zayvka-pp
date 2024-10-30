@@ -104,10 +104,10 @@ input[type="tel"],
 .c-car-spinner {
     height: 120px;
     width: 120px;
-    position: relative;
+    /* position: relative; */
     margin: 0 auto;
     display: block;
-    /* position: fixed; */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
