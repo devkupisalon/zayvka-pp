@@ -7,6 +7,9 @@ const chat_id = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataU
 const deviceWidth = window.innerWidth;
 console.log("Ширина устройства: " + deviceWidth + "px");
 
+const deviceHeight = window.innerHeight;
+console.log("Высота устройства: " + deviceHeight + "px");
+
 const fields = {
     name: '#manager-name',
     phone: '#manager-phone',
