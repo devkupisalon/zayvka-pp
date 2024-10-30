@@ -299,11 +299,15 @@ input.multiselect_checkbox {
 .success-checkmark {
     display: none;
     margin: 0 auto;
-    margin-top: 300px;
+    /* margin-top: 300px; */
     width: 80px;
     height: 115px;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     .check-icon {
         width: 80px;
