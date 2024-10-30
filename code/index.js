@@ -240,7 +240,7 @@ fill_tg.addEventListener('click', async () => {
     });
 });
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     multiselects.forEach(multiselect => {
         let select = multiselect.querySelector(".field_select");
         let label = multiselect.querySelector(".field_multiselect");
@@ -255,24 +255,19 @@ document.addEventListener("click", function(event) {
 
 let multiselects = document.querySelectorAll(".multiselect_block");
 
-// Для каждого multiselect выполняем следующие действия
 multiselects.forEach(multiselect => {
-    // Получаем ссылку на метку и выпадающий список внутри текущего multiselect
     let label = multiselect.querySelector(".field_multiselect");
     let select = multiselect.querySelector(".field_select");
     let text = label.innerHTML;
 
-    // При клике на метку, отображаем или скрываем выпадающий список
     label.addEventListener("click", () => {
-        select.style.display = (select.style.display === "block") ? "none" : "block";
+        select.style.display = select.style.display === "block" ? "none" : "block";
 
-        // Если выпадающий список отображается при клике на метку, передвигаем фокус на него
         if (select.style.display === "block") {
             select.focus();
         }
     });
 
-    // При смене опции в выпадающем списке, обновляем отображение в метке
     select.addEventListener("change", () => {
         let selectedOptions = select.selectedOptions;
         label.innerHTML = "";
@@ -287,15 +282,24 @@ multiselects.forEach(multiselect => {
                 button.style.color = colors.button_text;
             }
 
-            button.onclick = _ => {
+            button.onclick = event => {
+                event.stopPropagation(); // Останавливаем распространение события
                 option.selected = false;
                 button.remove();
-                if (!select.selectedOptions.length) label.innerHTML = text
+                if (!select.selectedOptions.length) label.innerHTML = text;
             };
             label.append(button);
         }
     });
+
+    // Добавляем обработчик событий для кнопок внутри мультиселекта, чтобы предотвратить открытие опций
+    multiselect.querySelectorAll(".btn_multiselect").forEach(button => {
+        button.addEventListener("click", event => {
+            event.stopPropagation(); // Останавливаем распространение события
+        });
+    });
 });
+
 
 if (chat_id) {
 
