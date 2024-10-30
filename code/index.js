@@ -4,6 +4,9 @@ const urlParams = new URLSearchParams(queryString);
 const manager = tg?.initDataUnsafe.start_param || urlParams.get('manager');
 const chat_id = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : false;
 
+const deviceWidth = window.innerWidth;
+console.log("Ширина устройства: " + deviceWidth + "px");
+
 const fields = {
     name: '#manager-name',
     phone: '#manager-phone',
