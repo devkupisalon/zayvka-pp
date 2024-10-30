@@ -51,7 +51,7 @@ input:valid {
 .input-label {
     text-align: center;
     /* width: calc(23% - 10px); */
-    width: calc(30% -10px);
+    width: calc(30% - 10px);
     font-weight: bold;
     margin-right: 10px;
     margin-bottom: 20px;
