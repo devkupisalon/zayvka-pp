@@ -68,7 +68,7 @@ input[type="tel"],
 .select {
     text-align: center;
     /* width: calc(55% - 10px); */
-    width: calc(70% - 10px);
+    width: calc(60% - 10px);
     color: var(--tg-theme-text-color);
     padding: 10px 20px;
     border-radius: 20px;
