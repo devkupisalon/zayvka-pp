@@ -131,7 +131,7 @@ input[type="tel"],
     text-align: center;
 }
 
-.button {
+/* .button {
     width: 100%;
     height: 50px;
     border: none;
@@ -144,7 +144,7 @@ input[type="tel"],
     font-size: 14px;
     margin-top: 10px;
     margin-bottom: 10px;
-}
+} */
 
 .button,
 .fill-tg,
@@ -159,6 +159,9 @@ input[type="tel"],
     background: var(--tg-theme-button-color);
     border-radius: 20px;
     border: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .send {
