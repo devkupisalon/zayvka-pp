@@ -112,7 +112,6 @@ input[type="tel"],
     transform: translate(-50%, -50%);
 }
 
-
 .c-car-spinner__svg {
     animation: spinneriminen 1s linear infinite;
     position: absolute;
@@ -167,10 +166,6 @@ input[type="tel"],
     display: none;
 }
 
-.field_select[aria-expanded="true"] {
-    display: block;
-}
-
 .field_multiselect {
     font-weight: bold;
     width: 100%;
@@ -183,6 +178,7 @@ input[type="tel"],
     color: var(--tg-theme-text-color);
     margin-bottom: 30px;
     margin-top: 20px;
+    padding: 10px 10px;
 
     outline-color: var(--tg-theme-bg-color);
 
@@ -193,10 +189,6 @@ input[type="tel"],
     &:focus {
         box-shadow: 0 0 2px rgba(0, 0, 0, 0.16);
     }
-}
-
-.field_multiselect {
-    padding: 10px 10px;
 }
 
 .multiselect_block {
