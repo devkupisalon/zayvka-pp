@@ -106,7 +106,7 @@ input[type="tel"],
     width: 120px;
     position: relative;
     margin: 0 auto;
-    margin-top: 250px;
+    margin-top: 50%;
     display: block;
 }
 
