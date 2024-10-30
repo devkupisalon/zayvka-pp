@@ -4,12 +4,6 @@ const urlParams = new URLSearchParams(queryString);
 const manager = tg?.initDataUnsafe.start_param || urlParams.get('manager');
 const chat_id = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : false;
 
-const deviceWidth = window.innerWidth;
-console.log("Ширина устройства: " + deviceWidth + "px");
-
-const deviceHeight = window.innerHeight;
-console.log("Высота устройства: " + deviceHeight + "px");
-
 const fields = {
     name: '#manager-name',
     phone: '#manager-phone',
@@ -70,7 +64,7 @@ function showBottomBar(text) {
 function extractLink(text) {
     const textRegex = /.*[^(https?:\/\/)?(www\.)?\S+\.\S+]/gm;
     const urlRegex = /(https?:\/\/.+)/gm;
-  
+
     const urlMatch = text.match(urlRegex);
     const textMatch = text.match(textRegex);
 
@@ -246,13 +240,41 @@ fill_tg.addEventListener('click', async () => {
     });
 });
 
-let multiselect_block = document.querySelectorAll(".multiselect_block");
-multiselect_block.forEach(parent => {
-    let label = parent.querySelector(".field_multiselect");
-    let select = parent.querySelector(".field_select");
+document.addEventListener("click", function(event) {
+    multiselects.forEach(multiselect => {
+        let select = multiselect.querySelector(".field_select");
+        let label = multiselect.querySelector(".field_multiselect");
+
+        // Проверяем, содержит ли событие элемент выпадающего списка или его метки 
+        if (!select.contains(event.target) && !label.contains(event.target)) {
+            // Если событие не происходит внутри списка или его метки, скрываем список
+            select.style.display = "none";
+        }
+    });
+})
+
+let multiselects = document.querySelectorAll(".multiselect_block");
+
+// Для каждого multiselect выполняем следующие действия
+multiselects.forEach(multiselect => {
+    // Получаем ссылку на метку и выпадающий список внутри текущего multiselect
+    let label = multiselect.querySelector(".field_multiselect");
+    let select = multiselect.querySelector(".field_select");
     let text = label.innerHTML;
-    select.addEventListener("change", function (element) {
-        let selectedOptions = this.selectedOptions;
+
+    // При клике на метку, отображаем или скрываем выпадающий список
+    label.addEventListener("click", () => {
+        select.style.display = (select.style.display === "block") ? "none" : "block";
+
+        // Если выпадающий список отображается при клике на метку, передвигаем фокус на него
+        if (select.style.display === "block") {
+            select.focus();
+        }
+    });
+
+    // При смене опции в выпадающем списке, обновляем отображение в метке
+    select.addEventListener("change", () => {
+        let selectedOptions = select.selectedOptions;
         label.innerHTML = "";
         for (let option of selectedOptions) {
             let button = document.createElement("button");
