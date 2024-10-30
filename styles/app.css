@@ -50,7 +50,8 @@ input:valid {
 
 .input-label {
     text-align: center;
-    width: calc(23% - 10px);
+    /* width: calc(23% - 10px); */
+    width: 30%;
     font-weight: bold;
     margin-right: 10px;
     margin-bottom: 20px;
@@ -66,7 +67,8 @@ input[type="tel"],
 .input-date,
 .select {
     text-align: center;
-    width: calc(55% - 10px);
+    /* width: calc(55% - 10px); */
+    width: 70%;
     color: var(--tg-theme-text-color);
     padding: 10px 20px;
     border-radius: 20px;
