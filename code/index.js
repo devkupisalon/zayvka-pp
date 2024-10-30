@@ -402,6 +402,7 @@ $(document).ready(function () {
     });
 });
 
+// скрываем bottom sheet
 $('.backdrop').click(() => {
     $('.bottom-sheet-wrapper').removeClass('show-modal');
     document.querySelector('.bottom-sheet').style.display = 'none';
@@ -409,11 +410,7 @@ $('.backdrop').click(() => {
 
 async function preload() {
     if (chat_id) {
-        tg.MainButton.show();
-        tg.MainButton.setParams({
-            has_shine_effect: true,
-            text: 'Отправить данные',
-        });
+        tg.MainButton.hide();
     } else {
         await change();
         send.style.display = 'block';
@@ -426,6 +423,14 @@ async function preload() {
 
     preloader.style.display = "none";
     container.style.display = "flex";
+
+    if (chat_id) {
+        tg.MainButton.show();
+        tg.MainButton.setParams({
+            has_shine_effect: true,
+            text: 'Отправить данные',
+        });
+    }
 }
 
 preload();
