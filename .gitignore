@@ -1,4 +1,5 @@
 .env
 credentials.json
+managers.json
 node_modules
 *.log

@@ -11,17 +11,22 @@ const app = express();
 const stylesPath = path.join(__dirname, 'styles');
 const codePath = path.join(__dirname, 'code');
 
+/** STYLES */
 app.get('/styles/:path', (req, res) => res.sendFile(path.join(stylesPath, req.params.path)));
 
+/** SCRIOTS */
 app.get('/scripts/:path', (req, res) => res.sendFile(path.join(codePath, req.params.path)));
 
+/** HOPE PAGE */
 app.get('/', (req, res) => res.sendFile(HOME));
 
+/** ERRORS */
 app.use((error, req, res, next) => {
     logger.error(`An error occurred: ${error.message}`);
     res.status(500).send(error);
 });
 
+/** Get cars brands and models for select */
 app.get('/get-cars', async (rea, res) => {
     try {
         const data = await get_cars();
@@ -33,6 +38,7 @@ app.get('/get-cars', async (rea, res) => {
     }
 });
 
+/** Get gropus values for select */
 app.get('/getdata', async (req, res) => {
     try {
         const values = await get_values();
@@ -44,6 +50,7 @@ app.get('/getdata', async (req, res) => {
     }
 });
 
+/** Save user data to spreadsheet */
 app.get('/savedata', async (req, res) => {
     try {
         
@@ -57,6 +64,7 @@ app.get('/savedata', async (req, res) => {
     }
 });
 
+/** server init */
 app.listen('8000', (err) => {
     if (err) {
         logger.error(err.message);
