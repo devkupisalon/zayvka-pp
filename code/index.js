@@ -238,19 +238,6 @@ fill_tg.addEventListener('click', async () => {
     });
 });
 
-document.addEventListener("click", function (event) {
-    multiselects.forEach(multiselect => {
-        let select = multiselect.querySelector(".field_select");
-        let label = multiselect.querySelector(".field_multiselect");
-
-        // Проверяем, содержит ли событие элемент выпадающего списка или его метки 
-        if (!select.contains(event.target) && !label.contains(event.target)) {
-            // Если событие не происходит внутри списка или его метки, скрываем список
-            select.style.display = "none";
-        }
-    });
-})
-
 /**
  * Инициализация переменных для элементов мультиселекта.
  */
@@ -282,6 +269,11 @@ function do_buttons(option, label, select, text) {
     button.type = "button";
     button.className = "btn_multiselect";
     button.textContent = option.value;
+
+    if (!chat_id) {
+        button.style.backgroundColor = colors.button_bg;
+        button.style.color = colors.button_text;
+    }
 
     button.onclick = event => {
         event.stopPropagation(); // Останавливаем распространение события
