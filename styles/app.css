@@ -445,15 +445,15 @@ input[type="tel"],
     .bottom-sheet {
         display: none;
         background: #fff;
-        width: 97%;
+        width: 100%;
         min-height: 200px;
         position: absolute;
         z-index: 2;
-        border-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         transition: opacity .3s ease, transform .3s ease;
         left: 50%;
         transform: translateX(-50%);
-        bottom: -110%;
     }
 
     &.show-modal {
@@ -463,7 +463,7 @@ input[type="tel"],
         }
 
         .bottom-sheet {
-            bottom: 5px;
+            bottom: -5px;
         }
     }
 }
