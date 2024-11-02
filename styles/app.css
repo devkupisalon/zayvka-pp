@@ -431,7 +431,7 @@ input[type="tel"],
 
 .bottom-sheet-wrapper {
     .backdrop {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -447,7 +447,7 @@ input[type="tel"],
         background: #fff;
         width: 100%;
         min-height: 200px;
-        position: absolute;
+        position: fixed;
         z-index: 2;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
