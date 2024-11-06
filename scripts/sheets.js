@@ -63,7 +63,7 @@ const save = async (params) => {
     try {
         const { date, time, manager, brand, model, gosnum, name, phone, source, visit, chat_id } = params;
         const values = await get_data(MONITORSPREADSHEET, monitorsheetname);
-        const arr = [uid, date, time, , , , managers_map[manager].m, brand, model, gosnum, , , , , , come_status, name, phone, , , , , , , , , , , , , , , , , , , , timestamp, visit];
+        const arr = [uid, date, time, , , , managers_map[manager].m, brand, model, gosnum, , , , , , come_status, name, phone, , , , , , , , , , , , , , , , , , , timestamp, visit];
 
         const requestBody = { values: [arr] };
         const row = values.length + 1;
