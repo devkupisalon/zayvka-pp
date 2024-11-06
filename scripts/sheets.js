@@ -67,7 +67,7 @@ const save = async (params) => {
 
         const requestBody = { values: [arr] };
         const row = values.length + 1;
-        const range = `${monitorsheetname}!A${row}:AL${row}`;
+        const range = `${monitorsheetname}!A${row}`;
 
         const { data } = await sheets.spreadsheets.values.update({
             spreadsheetId: MONITORSPREADSHEET,
