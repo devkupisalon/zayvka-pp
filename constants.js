@@ -1,7 +1,7 @@
-import path from 'path';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
+import path from "path";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
 dotenv.config();
 
@@ -11,18 +11,18 @@ const __dirname = path.dirname(__filename);
 let managers_map;
 
 const constants = {
-    ...Object.keys(process.env).reduce((acc, key) => {
-        acc[key] = process.env[key];
-        return acc;
-    }, {}),
-    HOME: `${__dirname}/index.html`,
-    come_status: 'Ждем клиента'
+  ...Object.keys(process.env).reduce((acc, key) => {
+    acc[key] = process.env[key];
+    return acc;
+  }, {}),
+  HOME: `${__dirname}/index.html`,
+  come_status: "Ждем клиента",
 };
 
-fs.readFile('managers.json', 'utf8', (err, data) => {
+fs.readFile("managers.json", "utf8", (err, data) => {
   if (err) {
-      console.error(err);
-      return;
+    console.error(err);
+    return;
   }
   const jsonData = JSON.parse(data);
   managers_map = jsonData;

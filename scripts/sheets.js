@@ -1,21 +1,21 @@
-import gauth from '../scripts/gauth.js';
-import { constants, managers_map } from '../constants.js';
-import logger from '../logs/logger.js';
+import gauth from "../scripts/gauth.js";
+import { constants, managers_map } from "../constants.js";
+import logger from "../logs/logger.js";
 
-import { v4 as uuidv4 } from 'uuid';
-import { format } from 'date-fns';
-
+import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 
 const { sheets } = gauth();
 
 const {
-    for_pass_sheetname,
-    carssheetname,
-    CARSSPREADSHEET,
-    MONITORSPREADSHEET,
-    monitorsheetname,
-    come_status,
-    google_web_app_url } = constants;
+  CARSSPREADSHEET,
+  MONITORSPREADSHEET,
+  monitorsheetname,
+  come_status,
+  google_web_app_url,
+  sheetnames,
+  sourcevalue,
+} = constants;
 
 /**
  * Асинхронная функция get_data для получения данных из Google Sheets по идентификатору таблицы и диапазону.
@@ -24,31 +24,70 @@ const {
  * @returns {Array} - Массив значений данных из таблицы.
  */
 const get_data = async (spreadsheetId, range) => {
-    try {
-        const { data: { values } } = await sheets.spreadsheets.values.get({
-            spreadsheetId,
-            range,
-        });
-        return values;
-    } catch (error) {
-        logger.error(error.message);
-    }
+  try {
+    const {
+      data: { values },
+    } = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
+    return values;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+/**
+ * Returns the column number containing the specified value on the given sheet.
+ * @param {Sheet} sheet - The sheet on which the search is performed.
+ * @param {string} value - The value to find.
+ * @returns {number} - The column number where the value is found. If the value is not found, -1 is returned.
+ */
+function getColumnNumberByValue(values, value) {
+  if (values) {
+    const columnNumber = values.indexOf(value) + 1;
+    return columnNumber;
+  } else {
+    return -1; // Returns -1 if the value is not found
+  }
 }
 
 /**
- * Асинхронная функция get_values для получения значений из таблицы по заранее определенным параметрам.
- * @returns {Array} - Массив значений из таблицы.
+ * Asynchronous function get_data to retrieve data from Google Sheets by spreadsheet ID and range.
+ * @param {string} spreadsheetId - The ID of the Google Sheets spreadsheet.
+ * @param {Array} ranges - The ranges  array of data to retrieve.
+ * @returns {Array} - An array of data values from the spreadsheet.
  */
-const get_values = async () => {
-    try {
-        const values = await get_data(CARSSPREADSHEET, for_pass_sheetname);
+const get_all_data = async () => {
+  const spreadsheetId = CARSSPREADSHEET;
+  const ranges = sheetnames.split(", ");
 
-        logger.info('Data received successfully');
-        return values;
-    } catch (error) {
-        logger.error(error.message);
-    }
-}
+  try {
+    const {
+      data: { valueRanges },
+    } = await sheets.spreadsheets.values.batchGet({
+      spreadsheetId,
+      ranges, // Add multiple ranges you want to retrieve data from
+    });
+
+    const obj = valueRanges.reduce((acc, { values, range }, i) => {
+      if (i === 2) {
+        const col_i = getColumnNumberByValue(values[0], sourcevalue);
+        acc[range.replace(/!.*/g, "")] = values
+          .map((r) => r[col_i - 1])
+          .filter(Boolean)
+          .slice(1);
+      } else {
+        acc[range.replace(/!.*/g, "")] = values;
+      }
+      return acc;
+    }, {});
+
+    return obj;
+  } catch (error) {
+    logger.error(`Error in get_data: ${error.message}`);
+  }
+};
 
 /**
  * Асинхронная функция save для сохранения данных в таблице Google Sheets и выполнения дополнительных действий.
@@ -56,62 +95,110 @@ const get_values = async () => {
  * @returns {Object|boolean} - Объект успешного сохранения или логическое значение false в случае ошибки.
  */
 const save = async (params) => {
+  const timestamp = format(new Date(), "dd.MM.yyyy");
+  const uid = uuidv4();
 
-    const timestamp = format(new Date(), 'dd.MM.yyyy');
-    const uid = uuidv4();
+  try {
+    const {
+      date,
+      time,
+      manager,
+      brand,
+      model,
+      gosnum,
+      name,
+      phone,
+      source,
+      visit,
+      chat_id,
+    } = params;
+    const values = await get_data(MONITORSPREADSHEET, monitorsheetname);
+    const arr = [
+      uid,
+      date,
+      time,
+      ,
+      ,
+      ,
+      managers_map[manager].m,
+      brand,
+      model,
+      gosnum,
+      ,
+      ,
+      ,
+      ,
+      ,
+      come_status,
+      name,
+      phone,
+      source,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      ,
+      timestamp,
+      visit,
+    ];
 
-    try {
-        const { date, time, manager, brand, model, gosnum, name, phone, source, visit, chat_id } = params;
-        const values = await get_data(MONITORSPREADSHEET, monitorsheetname);
-        const arr = [uid, date, time, , , , managers_map[manager].m, brand, model, gosnum, , , , , , come_status, name, phone, , , , , , , , , , , , , , , , , , , timestamp, visit];
+    const requestBody = { values: [arr] };
+    const row = values.length + 1;
+    const range = `${monitorsheetname}!A${row}`;
 
-        const requestBody = { values: [arr] };
-        const row = values.length + 1;
-        const range = `${monitorsheetname}!A${row}`;
+    const { data } = await sheets.spreadsheets.values.update({
+      spreadsheetId: MONITORSPREADSHEET,
+      range,
+      valueInputOption: "USER_ENTERED",
+      requestBody,
+    });
 
-        const { data } = await sheets.spreadsheets.values.update({
-            spreadsheetId: MONITORSPREADSHEET,
-            range,
-            valueInputOption: 'USER_ENTERED',
-            requestBody,
-        });
-
-        if (data.spreadsheetId) {
-            logger.info('User data saved successfully');
-        }
-
-        const response = await fetch(google_web_app_url, {
-            method: 'POST',
-            body: JSON.stringify({ name, phone, date, gosnum, brand, model, chat_id, row }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            return { success: 'success' };
-        } else {
-            logger.warn('Error getting the link:', response.status, response.statusText);
-        }
-    } catch (error) {
-        logger.error(error.message);
-        return false;
+    if (data.spreadsheetId) {
+      logger.info("User data saved successfully");
     }
 
-}
+    const response = await fetch(google_web_app_url, {
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        phone,
+        date,
+        gosnum,
+        brand,
+        model,
+        chat_id,
+        row,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-/**
- * Асинхронная функция get_cars для получения данных о машинах из таблицы Google Sheets.
- * @returns {Array} - Массив значений данных о машинах из таблицы.
- */
-const get_cars = async () => {
-    try {
-        const values = await get_data(CARSSPREADSHEET, carssheetname);
-        logger.info('Data received successfully');
-        return values;
-    } catch (error) {
-        logger.error(error.message);
+    if (response.ok) {
+      return { success: "success" };
+    } else {
+      logger.warn(
+        "Error getting the link:",
+        response.status,
+        response.statusText
+      );
     }
-}
+  } catch (error) {
+    logger.error(error.message);
+    return false;
+  }
+};
 
-export { get_values, save, get_cars };
+export { save, get_all_data };

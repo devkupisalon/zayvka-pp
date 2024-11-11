@@ -166,7 +166,8 @@ input[type="tel"],
     display: none;
 }
 
-.field_multiselect {
+.field_multiselect,
+#source-select {
     font-weight: bold;
     width: 100%;
     display: block;
