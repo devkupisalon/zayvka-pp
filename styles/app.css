@@ -65,7 +65,7 @@ input[type="tel"],
 .input-time,
 .input-date,
 .select {
-    text-align: center;
+    text-align-last: center;
     width: calc(60% - 10px);
     color: var(--tg-theme-text-color);
     padding: 10px 20px;
@@ -176,6 +176,7 @@ input[type="tel"],
     box-sizing: border-box;
     border-radius: 20px;
     font-size: 14px;
+    text-align-last: center;
     color: var(--tg-theme-text-color);
     margin-bottom: 30px;
     margin-top: 20px;
