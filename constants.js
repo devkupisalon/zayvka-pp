@@ -17,9 +17,10 @@ const constants = {
   }, {}),
   HOME: `${__dirname}/index.html`,
   come_status: "Ждем клиента",
+  obj_path: `${__dirname}/json/hash_obj.json`
 };
 
-fs.readFile("managers.json", "utf8", (err, data) => {
+fs.readFile(`${__dirname}/json/managers.json`, "utf8", (err, data) => {
   if (err) {
     console.error(err);
     return;

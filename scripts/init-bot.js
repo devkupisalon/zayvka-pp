@@ -3,22 +3,31 @@ import { constants, managers_map } from "../constants.js";
 import { save } from "./sheets.js";
 import logger from "../logs/logger.js";
 import { encryptString, decryptString } from "./validate.js";
+import {
+  deletePropertiesFromFile,
+  append_json_file,
+  process_read_json,
+  process_return_json,
+  process_write_json,
+} from "./process-json.js";
 
-const { bot_token } = constants;
+const { bot_token, obj_path } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
 
 /**
  * Sends a confirmation message to the manager with inline keyboard options to activate or reject a request.
  * @param {Object} data - Data containing manager, brand, model, gosnum, name, and phone.
  */
-function sendConfirmMessage(data) {
+async function sendConfirmMessage(data) {
   const { manager, brand, model, gosnum, name, phone, chat_id } = data;
   const managerId = managers_map[manager].telegram_id;
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
-  const string = Object.values(data).join(";");
+  const hash = new Date().toISOString();
+  const x = {};
+  x[hash] = data;
 
-  logger.info(string);
+  await append_json_file(obj_pat, x[hash]);
 
   const options = {
     reply_markup: {
@@ -28,14 +37,14 @@ function sendConfirmMessage(data) {
             text: "Активировать",
             callback_data: JSON.stringify({
               action: "activate",
-              data: encryptString(string, bot_token),
+              data: hash,
             }),
           },
           {
             text: "Отклонить",
             callback_data: JSON.stringify({
               action: "reject",
-              data: encryptString(string, bot_token),
+              data: hash,
             }),
           },
         ],
@@ -54,10 +63,8 @@ function sendConfirmMessage(data) {
 bot.on("callback_query", async (callbackQuery) => {
   const { username, id } = callbackQuery.from;
   const { action, data } = JSON.parse(callbackQuery.data);
-  const [brand, model, gosnum, name, chat_id, date] = decryptString(
-    data,
-    bot_token
-  ).split(";");
+  const json_data = await process_return_json(obj_path);
+  const { brand, model, gosnum, name, chat_id, date } = json_data[data];
 
   if (action === "activate") {
     const { success } = await save(data);
@@ -79,6 +86,8 @@ bot.on("callback_query", async (callbackQuery) => {
     );
     bot.sendMessage(id, "Информация передана клиенту");
   }
+
+  deletePropertiesFromFile(data);
 });
 
 export { sendConfirmMessage };
