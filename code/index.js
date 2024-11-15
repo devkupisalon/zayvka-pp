@@ -374,8 +374,9 @@ if (chat_id) {
 
           tg.MainButton.hideProgress();
           tg.MainButton.hide();
-          tg.close();
-        } else {
+          setTimeout(() => {
+            tg.close();
+          }, 3000);
         }
       } catch (error) {
         tg.showPopup({
