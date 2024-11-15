@@ -1,9 +1,12 @@
 import express from "express";
 import path from "path";
+import { sendConfirmMessage } from "./scripts/init-bot.js";
 
 import logger from "./logs/logger.js";
 import { constants, __dirname } from "./constants.js";
 import { save, get_all_data } from "./scripts/sheets.js";
+
+import "./scripts/init-bot.js";
 
 const { HOME } = constants;
 const app = express();
@@ -49,8 +52,13 @@ app.get("/get-all-data", async (req, res) => {
 app.get("/savedata", async (req, res) => {
   try {
     logger.info(`Data successfully received from mini-app`);
-    const success = await save(req.query);
-
+    let success;
+    const tg = req.query?.tg;
+    if (tg === "true") {
+      success = await sendConfirmMessage(req.query);
+    } else {
+      success = await save(req.query);
+    }
     return res.json({ success });
   } catch (error) {
     logger.error(`An error occurred in save_data: ${error.message}`);

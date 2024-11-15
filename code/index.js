@@ -122,7 +122,6 @@ async function getCarBrandsAndModels(values) {
 
 async function do_source(flatValues) {
   try {
-    console.log(flatValues);
     flatValues.forEach((option) => {
       const optionElement = document.createElement("option");
       optionElement.value = option;
@@ -365,7 +364,7 @@ if (chat_id) {
             manager
           )}&chat_id=${chat_id}&visit=${encodeURIComponent(
             buttonValues
-          )}&source=${source}`
+          )}&source=${source}&tg=true`
         );
         const { success } = await response.json();
         if (success) {
