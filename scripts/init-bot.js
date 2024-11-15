@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import { constants, managers_map } from "../constants.js";
 import { save } from "./sheets.js";
-import {logger} from "../logs/logger.js";
+import logger from "../logs/logger.js";
 
 const { bot_token } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
@@ -15,7 +15,7 @@ function sendConfirmMessage(data) {
   const managerId = managers_map[manager].telegram_id;
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
-  
+
   const options = {
     reply_markup: {
       inline_keyboard: [
