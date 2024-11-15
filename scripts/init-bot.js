@@ -51,10 +51,9 @@ async function sendConfirmMessage(data) {
     },
   };
 
-  logger.info(x);
-
   bot.sendMessage(managerId, message_text, options);
   bot.sendMessage(chat_id, to_user_text);
+
   return { success: "success" };
 }
 
@@ -63,11 +62,10 @@ bot.on("callback_query", async (callbackQuery) => {
   const { username, id } = callbackQuery.from;
   const { action, data } = JSON.parse(callbackQuery.data);
   const json_data = await process_return_json(obj_path);
-  logger.info(json_data[data]);
   const { brand, model, gosnum, name, chat_id, date } = json_data[data];
 
   if (action === "activate") {
-    const { success } = await save(data);
+    const { success } = await save(json_data[data]);
 
     if (success) {
       const message_text = `${name}, пропуск для Вас заказан на ${date} для автомобиля ${brand} ${model}, госномер ${gosnum}. Ссылка для навигатора - https://yandex.ru/maps/-/CCQdrLAg-D`;
