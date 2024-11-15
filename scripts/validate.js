@@ -30,9 +30,7 @@ const verifyTelegramWebAppData = (telegramInitData, botToken) => {
 
 // Function to encrypt the string using the bot token
 const encryptString = (stringToEncrypt, bot_token) => {
-  const algorithm = "aes-256-cbc";
-  const key = Buffer.from(bot_token, "utf8");
-  const cipher = crypto.createCipheriv(algorithm, key, Buffer.alloc(16));
+  const cipher = crypto.createCipher("aes-256-cbc", bot_token);
   let encryptedString = cipher.update(stringToEncrypt, "utf8", "hex");
   encryptedString += cipher.final("hex");
   return encryptedString;
@@ -40,9 +38,7 @@ const encryptString = (stringToEncrypt, bot_token) => {
 
 // Function to decrypt the encrypted string using the bot token
 const decryptString = (encryptedString, bot_token) => {
-  const algorithm = "aes-256-cbc";
-  const key = Buffer.from(bot_token, "utf8");
-  const decipher = crypto.createDecipheriv(algorithm, key, Buffer.alloc(16));
+  const decipher = crypto.createDecipher("aes-256-cbc", bot_token);
   let decryptedString = decipher.update(encryptedString, "hex", "utf8");
   decryptedString += decipher.final("utf8");
   return decryptedString;
