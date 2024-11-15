@@ -16,7 +16,7 @@ function sendConfirmMessage(data) {
   const managerId = managers_map[manager].telegram_id;
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
-  const string = Object.values(data).join(',');
+  const string = Object.values(data).join(";");
 
   const options = {
     reply_markup: {
@@ -52,9 +52,10 @@ function sendConfirmMessage(data) {
 bot.on("callback_query", async (callbackQuery) => {
   const { username, id } = callbackQuery.from;
   const { action, data } = JSON.parse(callbackQuery.data);
-  const { brand, model, gosnum, name, chat_id, date } = JSON.parse(
-    decryptString(data, bot_token)
-  );
+  const [brand, model, gosnum, name, chat_id, date] = decryptString(
+    data,
+    bot_token
+  ).split(";");
 
   if (action === "activate") {
     const { success } = await save(data);
