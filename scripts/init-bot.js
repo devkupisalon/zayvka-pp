@@ -1,14 +1,10 @@
 import TelegramBot from "node-telegram-bot-api";
 import { constants, managers_map } from "../constants.js";
 import { save } from "./sheets.js";
-import logger from "../logs/logger.js";
-import { encryptString, decryptString } from "./validate.js";
 import {
   deletePropertiesFromFile,
   append_json_file,
-  process_read_json,
   process_return_json,
-  process_write_json,
 } from "./process-json.js";
 
 const { bot_token, obj_path } = constants;
