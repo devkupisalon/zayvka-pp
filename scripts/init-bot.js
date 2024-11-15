@@ -18,6 +18,8 @@ function sendConfirmMessage(data) {
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
   const string = Object.values(data).join(";");
 
+  logger.info(string);
+
   const options = {
     reply_markup: {
       inline_keyboard: [
