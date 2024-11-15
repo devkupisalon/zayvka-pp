@@ -1,6 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import { constants, managers_map } from "../constants.js";
 import { save } from "./sheets.js";
+import {logger} from "../logs/logger.js";
 
 const { bot_token } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
