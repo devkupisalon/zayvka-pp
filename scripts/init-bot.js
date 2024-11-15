@@ -14,6 +14,7 @@ function sendConfirmMessage(data) {
   const managerId = managers_map[manager].telegram_id;
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
+  
   const options = {
     reply_markup: {
       inline_keyboard: [
@@ -36,6 +37,8 @@ function sendConfirmMessage(data) {
       ],
     },
   };
+
+  logger.info(options);
 
   bot.sendMessage(managerId, message_text, options);
   bot.sendMessage(chat_id, to_user_text);
