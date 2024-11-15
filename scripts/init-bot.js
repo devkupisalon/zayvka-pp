@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { constants, managers_map } from "../constants.js";
 import { save } from "./sheets.js";
 import logger from "../logs/logger.js";
+import { encryptString, decryptString } from "./validate.js";
 
 const { bot_token } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
@@ -24,14 +25,14 @@ function sendConfirmMessage(data) {
             text: "Активировать",
             callback_data: JSON.stringify({
               action: "activate",
-              data,
+              data: encryptString(JSON.stringify(data), bot_token),
             }),
           },
           {
             text: "Отклонить",
             callback_data: JSON.stringify({
               action: "reject",
-              data,
+              data: encryptString(JSON.stringify(data), bot_token),
             }),
           },
         ],
@@ -50,7 +51,9 @@ function sendConfirmMessage(data) {
 bot.on("callback_query", async (callbackQuery) => {
   const { username, id } = callbackQuery.from;
   const { action, data } = JSON.parse(callbackQuery.data);
-  const { brand, model, gosnum, name, chat_id, date } = data;
+  const { brand, model, gosnum, name, chat_id, date } = JSON.parse(
+    decryptString(data, bot_token)
+  );
 
   if (action === "activate") {
     const { success } = await save(data);
