@@ -27,7 +27,7 @@ async function sendConfirmMessage(data) {
   const x = {};
   x[hash] = data;
 
-  await append_json_file(obj_pat, x[hash]);
+  await append_json_file(obj_path, x[hash]);
 
   const options = {
     reply_markup: {
