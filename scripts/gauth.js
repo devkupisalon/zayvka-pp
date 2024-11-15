@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import { __dirname } from '../constants';
+import { __dirname } from '../constants.js';
 
 /**
  * Функция gauth возвращает объект с авторизацией Google и экземплярами объектов для работы с Google Sheets и Google Drive.
