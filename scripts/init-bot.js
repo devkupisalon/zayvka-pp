@@ -10,6 +10,16 @@ import {
 const { bot_token, obj_path } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
 
+async function updateMessage(callbackQuery, chat_id) {
+  await bot.editMessageReplyMarkup(
+    { inline_keyboard: [] },
+    {
+      chat_id,
+      message_id: callbackQuery.message.message_id,
+    }
+  );
+}
+
 /**
  * Sends a confirmation message to the manager with inline keyboard options to activate or reject a request.
  * @param {Object} data - Data containing manager, brand, model, gosnum, name, and phone.
@@ -80,7 +90,7 @@ bot.on("callback_query", async (callbackQuery) => {
     );
     bot.sendMessage(id, "Информация передана клиенту");
   }
-
+  await updateMessage(callbackQuery, id);
   deletePropertiesFromFile(data);
 });
 
