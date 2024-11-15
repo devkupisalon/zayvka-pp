@@ -24,8 +24,7 @@ async function sendConfirmMessage(data) {
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
   const hash = new Date().toISOString();
-  const x = {};
-  x[hash] = data;
+  const x = { [hash]: data };
 
   await append_json_file(obj_path, x);
 
@@ -52,7 +51,7 @@ async function sendConfirmMessage(data) {
     },
   };
 
-  logger.info(options);
+  logger.info(x);
 
   bot.sendMessage(managerId, message_text, options);
   bot.sendMessage(chat_id, to_user_text);
@@ -64,6 +63,7 @@ bot.on("callback_query", async (callbackQuery) => {
   const { username, id } = callbackQuery.from;
   const { action, data } = JSON.parse(callbackQuery.data);
   const json_data = await process_return_json(obj_path);
+  logger.info(json_data[data]);
   const { brand, model, gosnum, name, chat_id, date } = json_data[data];
 
   if (action === "activate") {
