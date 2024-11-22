@@ -140,18 +140,18 @@ async function do_source(flatValues) {
   }
 }
 
-// async function fetchData(flatValues) {
-//   try {
-//     flatValues.forEach((option) => {
-//       const optionElement = document.createElement("option");
-//       optionElement.value = option;
-//       optionElement.text = option;
-//       selectElement.appendChild(optionElement);
-//     });
-//   } catch (error) {
-//     console.error("Error fetching data:", error.message);
-//   }
-// }
+async function fetchData(flatValues) {
+  try {
+    flatValues.forEach((option) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = option;
+      optionElement.text = option;
+      selectElement.appendChild(optionElement);
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+  }
+}
 
 $(document).ready(function () {
   $('input[type="tel"]').inputmask({ "mask": "7 (999) 999 99-99" });
