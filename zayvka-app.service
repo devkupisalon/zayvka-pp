@@ -6,8 +6,8 @@ After=network.target
 ExecStart=/root/.nvm/versions/node/v23.1.0/bin/node /root/zayvka-app/app.js
 WorkingDirectory=/root/zayvka-app
 Restart=always
-StandardOutput=syslog
-StandardError=syslog
+StandardOutput=journal
+StandardError=journal
 SyslogIdentifier=zayvka-app
 
 [Install]
