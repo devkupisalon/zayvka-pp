@@ -92,6 +92,12 @@ async function get_all_data() {
 }
 
 async function getCarBrandsAndModels(values) {
+  function clearCarModelsOptions() {
+    while (carModelsSelect.options.length > 0) {
+      carModelsSelect.remove(0);
+    }
+  }
+  
   for (let row of values) {
     const brand = row[0];
     const option = document.createElement("option");
@@ -100,6 +106,7 @@ async function getCarBrandsAndModels(values) {
   }
 
   function getCarModels() {
+    clearCarModelsOptions(); // Предварительно удалить все опции
     const selectedBrand = carBrandsSelect.value;
 
     for (let [brand, ...models] of values) {
@@ -146,10 +153,9 @@ async function fetchData(flatValues) {
   }
 }
 
-function formatPhoneNumber(input) {
-  input.value = input.value.replace(/[^\d]/g, "");
-  input.value = input.value.slice(0, 13);
-}
+$(document).ready(function () {
+  $('input[type="tel"]').inputmask({ "mask": "7 (999) 999 99-99" });
+});
 
 function validateName(input) {
   let value = input.value;
