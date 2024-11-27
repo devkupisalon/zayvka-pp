@@ -13,10 +13,7 @@ const bot = new TelegramBot(bot_token, { polling: true });
 async function updateMessage(callbackQuery, chat_id) {
   await bot.editMessageReplyMarkup(
     { inline_keyboard: [] },
-    {
-      chat_id,
-      message_id: callbackQuery.message.message_id,
-    }
+    { chat_id, message_id: callbackQuery.message.message_id }
   );
 }
 
@@ -25,9 +22,9 @@ async function updateMessage(callbackQuery, chat_id) {
  * @param {Object} data - Data containing manager, brand, model, gosnum, name, and phone.
  */
 async function sendConfirmMessage(data) {
-  const { manager, brand, model, gosnum, name, phone, chat_id } = data;
+  const { manager, brand, model, gosnum, name, phone, chat_id, date } = data;
   const managerId = managers_map[manager].telegram_id;
-  const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\n`;
+  const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\nДата - ${date}`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
   const hash = new Date().toISOString();
   const x = { [hash]: data };

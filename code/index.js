@@ -53,16 +53,13 @@ function showBottomBar(text) {
   // Извлечение ссылки из текста
   const { textBeforeLink, url } = extractLink(text);
 
-  // Создаем активную ссылку и текстовый узел
   const link = document.createElement("a");
   const textNode = document.createTextNode(textBeforeLink);
 
-  // Настройка стилей ссылки
   link.href = url || "#"; // Если ссылка не найдена, используем решетку
   link.textContent = url || ""; // Устанавливаем текст ссылки
   link.style.color = colors.button_bg; // Цвет ссылки
 
-  // Вставляем текстовый узел и ссылку в элемент с id 'bottom-text'
   const bottomText = document.getElementById("bottom-text");
   bottomText.textContent = ""; // Очистить содержимое элемента
   bottomText.appendChild(textNode); // Добавляем текст

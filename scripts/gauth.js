@@ -8,7 +8,8 @@ import { __dirname } from '../constants.js';
 const gauth = () => {
     const auth = new google.auth.GoogleAuth({
         keyFile: `${__dirname}/json/credentials.json`,
-        scopes: ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive'],
+        scopes: ['https://www.googleapis.com/auth/spreadsheets',
+            'https://www.googleapis.com/auth/drive'],
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
