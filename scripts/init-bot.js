@@ -72,19 +72,11 @@ bot.on("callback_query", async (callbackQuery) => {
 
     if (success) {
       const message_text = `${name}, пропуск для Вас заказан на ${date} для автомобиля ${brand} ${model}, госномер ${gosnum}. Ссылка для навигатора - https://yandex.ru/maps/-/CCQdrLAg-D`;
-      bot.sendMessage(chat_id, message_text, {
-        disable_web_page_preview: true,
-      });
-      bot.sendMessage(
-        id,
-        "Заявка на пропуск успешно создана и отправлена клиенту"
-      );
+      bot.sendMessage(chat_id, message_text, { disable_web_page_preview: true, });
+      bot.sendMessage(id, "Заявка на пропуск успешно создана и отправлена клиенту");
     }
   } else if (action === "reject") {
-    bot.sendMessage(
-      chat_id,
-      `Ваша заявка отклонена.\nОбратитесь к менеджеру @${username} для дополнительной информации.`
-    );
+    bot.sendMessage(chat_id, `Ваша заявка отклонена.\nОбратитесь к менеджеру @${username} для дополнительной информации.`);
     bot.sendMessage(id, "Информация передана клиенту");
   }
   await updateMessage(callbackQuery, id);
