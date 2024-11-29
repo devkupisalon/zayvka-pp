@@ -27,12 +27,13 @@ async function sendConfirmMessage(data) {
 
   if (avito === "true") {
     const managerKeys = Object.keys(managers_map.managers);
-      const currentIndex = index % managerKeys.length;
-      const currentKey = managerKeys[currentIndex];
-      managerId = managers_map.managers[currentKey].telegram_id;
-      managers_map.index = (index + 1) % managerKeys.length;
-      data.manager_name = managers_map.managers[currentKey].m;
-      await process_write_json(managers_obj_path, managers_map);
+    const index = managers_map.index;
+    const currentIndex = index % managerKeys.length;
+    const currentKey = managerKeys[currentIndex];
+    managerId = managers_map.managers[currentKey].telegram_id;
+    managers_map.index = (index + 1) % managerKeys.length;
+    data.manager_name = managers_map.managers[currentKey].m;
+    await process_write_json(managers_obj_path, managers_map);
   } else {
     managerId = managers_map.managers[manager].telegram_id;
   }
