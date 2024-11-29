@@ -23,10 +23,11 @@ async function updateMessage(callbackQuery, chat_id) {
  * @param {Object} data - Data containing manager, brand, model, gosnum, name, and phone.
  */
 async function sendConfirmMessage(data) {
-  const { manager, brand, model, gosnum, name, phone, chat_id, date, avito } = data;
+  let { manager, brand, model, gosnum, name, phone, chat_id, date, avito, source } = data;
   let managerId;
 
   if (avito === "true") {
+    source = "Авито";
     const managerKeys = Object.keys(managers_map.managers);
     const index = managers_map.index;
     const currentIndex = index % managerKeys.length;
@@ -39,7 +40,7 @@ async function sendConfirmMessage(data) {
     managerId = managers_map.managers[manager].telegram_id;
   }
 
-  const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\nДата - ${date}`;
+  const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\nДата - ${date}\nИсточник - ${source}`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
   const hash = new Date().toISOString();
   const x = { [hash]: data };
