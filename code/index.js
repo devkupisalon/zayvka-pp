@@ -2,6 +2,7 @@ const tg = window.Telegram.WebApp;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const manager = tg?.initDataUnsafe.start_param || urlParams.get("manager");
+const avito = tg?.initDataUnsafe.start_param === "avito" ? true : false;
 const chat_id =
   tg && tg.initDataUnsafe && tg.initDataUnsafe.user
     ? tg.initDataUnsafe.user.id
@@ -45,6 +46,10 @@ const carBrandsSelect = document.getElementById("car-brands-select");
 const carModelsSelect = document.getElementById("car-models-select");
 const selectElement = document.getElementById("field_select-type");
 const sourceElement = document.getElementById("source-select");
+
+if (avito) {
+  sourceElement.style.display = "none";
+}
 
 function showBottomBar(text) {
   document.querySelector(".bottom-sheet").style.display = "block";
@@ -94,7 +99,7 @@ async function getCarBrandsAndModels(values) {
       carModelsSelect.remove(0);
     }
   }
-  
+
   for (let row of values) {
     const brand = row[0];
     const option = document.createElement("option");
@@ -367,7 +372,7 @@ if (chat_id) {
             manager
           )}&chat_id=${chat_id}&visit=${encodeURIComponent(
             buttonValues
-          )}&source=${source}&tg=true`
+          )}&source=${source}&tg=true&avito=${avito}`
         );
         const { success } = await response.json();
         if (success) {
@@ -434,7 +439,7 @@ if (chat_id) {
             manager
           )}&chat_id=${chat_id}&visit=${encodeURIComponent(
             buttonValues
-          )}&source=${source}`
+          )}&source=${source}&avito=${avito}`
         );
         const { success } = await response.json();
         if (success) {

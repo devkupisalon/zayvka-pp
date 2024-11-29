@@ -4,6 +4,7 @@ import logger from "../logs/logger.js";
 
 import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
+import { process_write_json } from "./process-json.js";
 
 const { sheets } = gauth();
 
@@ -15,6 +16,7 @@ const {
   google_web_app_url,
   sheetnames,
   sourcevalue,
+  managers_obj_path
 } = constants;
 
 /**
@@ -99,7 +101,7 @@ const save = async (params) => {
   const uid = uuidv4();
 
   try {
-    const {
+    let {
       date,
       time,
       manager,
@@ -111,7 +113,16 @@ const save = async (params) => {
       source,
       visit,
       chat_id,
+      avito,
+      manager_name
     } = params;
+
+    if (manager_name) {
+      source = "Авито";
+    } else {
+      manager_name = managers_map.managers[manager].m;
+    }
+
     const values = await get_data(MONITORSPREADSHEET, monitorsheetname);
     const arr = [
       uid,

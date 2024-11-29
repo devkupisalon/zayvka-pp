@@ -7,7 +7,7 @@ import {
   process_return_json,
 } from "./process-json.js";
 
-const { bot_token, obj_path } = constants;
+const { bot_token, obj_path, managers_obj_path } = constants;
 const bot = new TelegramBot(bot_token, { polling: true });
 
 async function updateMessage(callbackQuery, chat_id) {
@@ -22,8 +22,21 @@ async function updateMessage(callbackQuery, chat_id) {
  * @param {Object} data - Data containing manager, brand, model, gosnum, name, and phone.
  */
 async function sendConfirmMessage(data) {
-  const { manager, brand, model, gosnum, name, phone, chat_id, date } = data;
-  const managerId = managers_map[manager].telegram_id;
+  const { manager, brand, model, gosnum, name, phone, chat_id, date, avito } = data;
+  let managerId;
+
+  if (avito === "true") {
+    const managerKeys = Object.keys(managers_map.managers);
+      const currentIndex = index % managerKeys.length;
+      const currentKey = managerKeys[currentIndex];
+      managerId = managers_map.managers[currentKey].telegram_id;
+      managers_map.index = (index + 1) % managerKeys.length;
+      data.manager_name = managers_map.managers[currentKey].m;
+      await process_write_json(managers_obj_path, managers_map);
+  } else {
+    managerId = managers_map.managers[manager].telegram_id;
+  }
+
   const message_text = `Входящая заявка на пропуск:\nИмя - ${name}\nТелефон- ${phone}\nМарка - ${brand}\nМодель - ${model}\nГосномер - ${gosnum}\nДата - ${date}`;
   const to_user_text = `${name}, ваша заявка ожидает подтверждения`;
   const hash = new Date().toISOString();

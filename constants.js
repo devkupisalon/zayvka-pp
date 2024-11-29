@@ -17,7 +17,8 @@ const constants = {
   }, {}),
   HOME: `${__dirname}/index.html`,
   come_status: "Ждем клиента",
-  obj_path: `${__dirname}/json/hash_obj.json`
+  obj_path: `${__dirname}/json/hash_obj.json`,
+  managers_obj_path: `${__dirname}/json/managers.json`
 };
 
 fs.readFile(`${__dirname}/json/managers.json`, "utf8", (err, data) => {
