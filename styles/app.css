@@ -13,7 +13,6 @@ body {
     text-align: center;
     height: fit-content;
     margin: 0 auto;
-    max-width: 400px;
     padding: 5px;
     border-radius: 20px;
     background-color: var(--tg-theme-header-bg-color);

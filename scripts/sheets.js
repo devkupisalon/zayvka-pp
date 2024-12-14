@@ -131,7 +131,7 @@ const save = async (params) => {
       ,
       ,
       ,
-      managers_map[manager].m,
+      managers_map.managers[manager].m,
       brand,
       model,
       gosnum,
